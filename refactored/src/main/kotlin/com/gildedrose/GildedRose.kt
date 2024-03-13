@@ -1,6 +1,6 @@
 package com.gildedrose
 
-class GildedRose(var items: List<Item>) {
+class GildedRose(private var items: List<Item>) {
 
 
     fun updateQuality() {
