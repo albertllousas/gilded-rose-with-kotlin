@@ -15,9 +15,9 @@ class ItemAger {
         val (name, sellIn, quality) = item
         val newQuality = when (name) {
             SULFURAS_ITEM_NAME -> quality
-            AGED_BRIE_ITEM_NAME -> quality + 1
-            else -> quality - 1
-        }.coerceAtLeast(0)
+            AGED_BRIE_ITEM_NAME -> quality.inc().coerceIn(0, 50)
+            else -> quality.dec().coerceIn(0, 50)
+        }
         return AgedItem(name, sellIn, newQuality)
     }
 }
