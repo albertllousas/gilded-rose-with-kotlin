@@ -15,4 +15,13 @@ class ItemAgerTest {
 
         agedItem.quality shouldBe 19
     }
+
+    @Test
+    fun `should never lower quality of an item below 0 at the end of the day`() {
+        val item = Item(name = "Standard Item", sellIn = 10, quality = 0)
+
+        val agedItem = itemAger.ageOneDay(item)
+
+        agedItem.quality shouldBe 0
+    }
 }

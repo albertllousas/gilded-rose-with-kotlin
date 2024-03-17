@@ -6,9 +6,9 @@ class ItemAger {
 
     fun ageOneDay(item: Item): AgedItem {
         val (name, sellIn, quality) = item
-        return AgedItem(name, sellIn, quality -  1)
+        val newQuality = (quality - 1).coerceAtLeast(0)
+        return AgedItem(name, sellIn, newQuality)
     }
-
 }
 
 private operator fun Item.component1() = this.name
