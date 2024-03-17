@@ -6,12 +6,18 @@ class ItemAger {
 
     companion object {
 
+        private const val AGED_BRIE_ITEM_NAME = "Aged Brie"
+
         private const val SULFURAS_ITEM_NAME = "Sulfuras, Hand of Ragnaros"
     }
 
     fun ageOneDay(item: Item): AgedItem {
         val (name, sellIn, quality) = item
-        val newQuality = if(name != SULFURAS_ITEM_NAME) (quality - 1).coerceAtLeast(0) else quality
+        val newQuality = when (name) {
+            SULFURAS_ITEM_NAME -> quality
+            AGED_BRIE_ITEM_NAME -> quality + 1
+            else -> quality - 1
+        }.coerceAtLeast(0)
         return AgedItem(name, sellIn, newQuality)
     }
 }

@@ -33,4 +33,13 @@ class ItemAgerTest {
 
         agedItem.quality shouldBe 80
     }
+
+    @Test
+    fun `should increase the quality of Aged Brie at the end of the day`() {
+        val item = Item(name = "Aged Brie", sellIn = 10, quality = 20)
+
+        val agedItem = itemAger.ageOneDay(item)
+
+        agedItem.quality shouldBe 21
+    }
 }
