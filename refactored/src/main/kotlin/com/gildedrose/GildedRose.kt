@@ -13,11 +13,9 @@ class GildedRose(private val items: List<Item>, private val itemAger: ItemAger =
 
     fun updateQuality() {
         items.forEach { item ->
-            item.quality = itemAger.ageOneDay(item).quality
-
-            if (item.name != SULFURAS_ITEM_NAME) {
-                item.sellIn -= 1
-            }
+            val agedItem = itemAger.ageOneDay(item)
+            item.quality = agedItem.quality
+            item.sellIn = agedItem.sellIn
 
             if (item.sellIn < 0) {
                 if (item.name != AGED_BRIE_ITEM_NAME) {

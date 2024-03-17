@@ -87,4 +87,22 @@ class ItemAgerTest {
 
         agedItem.sellIn shouldBe 9
     }
+
+    @Test
+    fun `should never lower the sellIn of a legendary item`() {
+        val item = Item(name = "Sulfuras, Hand of Ragnaros", sellIn = 10, quality = 80)
+
+        val agedItem = itemAger.ageOneDay(item)
+
+        agedItem.sellIn shouldBe 10
+    }
+
+    @Test
+    fun `should drop the quality to 0 of Backstage passes after the concert`() {
+        val item = Item(name = "Backstage passes to a TAFKAL80ETC concert", sellIn = 0, quality = 20)
+
+        val agedItem = itemAger.ageOneDay(item)
+
+        agedItem.quality shouldBe 0
+    }
 }
