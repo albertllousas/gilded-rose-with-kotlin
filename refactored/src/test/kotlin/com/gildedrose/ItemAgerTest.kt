@@ -78,4 +78,13 @@ class ItemAgerTest {
 
         agedItem.quality shouldBe 23
     }
+
+    @Test
+    fun `should lower the sellIn of an item at the end of the day`() {
+        val item = Item(name = "Standard Item", sellIn = 10, quality = 20)
+
+        val agedItem = itemAger.ageOneDay(item)
+
+        agedItem.sellIn shouldBe 9
+    }
 }

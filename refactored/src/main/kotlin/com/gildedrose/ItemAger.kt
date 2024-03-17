@@ -25,7 +25,8 @@ class ItemAger {
 
             else -> quality.dec()
         }.coerceIn(0, 50)
-        return AgedItem(name, sellIn, newQuality)
+        val newSellIn = sellIn.dec()
+        return AgedItem(name, newSellIn, newQuality)
     }
 
     private fun Item.isLegendary() = this.name == SULFURAS_ITEM_NAME

@@ -15,20 +15,6 @@ class GildedRose(private val items: List<Item>, private val itemAger: ItemAger =
         items.forEach { item ->
             item.quality = itemAger.ageOneDay(item).quality
 
-            if (item.name == BACKSTAGE_PASSES_ITEM_NAME) {
-                if (item.sellIn < 11) {
-                    if (item.quality < 50) {
-                        item.quality += 1
-                    }
-                }
-
-                if (item.sellIn < 6) {
-                    if (item.quality < 50) {
-                        item.quality += 1
-                    }
-                }
-            }
-
             if (item.name != SULFURAS_ITEM_NAME) {
                 item.sellIn -= 1
             }
