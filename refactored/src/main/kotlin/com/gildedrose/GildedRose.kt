@@ -12,25 +12,19 @@ class GildedRose(private val items: List<Item>, private val itemAger: ItemAger =
     }
 
     fun updateQuality() {
-        items.forEach {  item ->
-            if (item.name != AGED_BRIE_ITEM_NAME && item.name != BACKSTAGE_PASSES_ITEM_NAME) {
-                item.quality = itemAger.ageOneDay(item).quality
-            } else {
-                if (item.quality < 50) {
-                    item.quality += 1
+        items.forEach { item ->
+            item.quality = itemAger.ageOneDay(item).quality
 
-                    if (item.name == BACKSTAGE_PASSES_ITEM_NAME) {
-                        if (item.sellIn < 11) {
-                            if (item.quality < 50) {
-                                item.quality += 1
-                            }
-                        }
+            if (item.name == BACKSTAGE_PASSES_ITEM_NAME) {
+                if (item.sellIn < 11) {
+                    if (item.quality < 50) {
+                        item.quality += 1
+                    }
+                }
 
-                        if (item.sellIn < 6) {
-                            if (item.quality < 50) {
-                                item.quality += 1
-                            }
-                        }
+                if (item.sellIn < 6) {
+                    if (item.quality < 50) {
+                        item.quality += 1
                     }
                 }
             }
