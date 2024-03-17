@@ -24,4 +24,13 @@ class ItemAgerTest {
 
         agedItem.quality shouldBe 0
     }
+
+    @Test
+    fun `should never lower the quality of a legendary item`() {
+        val item = Item(name = "Sulfuras, Hand of Ragnaros", sellIn = 10, quality = 80)
+
+        val agedItem = itemAger.ageOneDay(item)
+
+        agedItem.quality shouldBe 80
+    }
 }
