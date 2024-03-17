@@ -1,6 +1,6 @@
 package com.gildedrose
 
-class GildedRose(private val items: List<Item>) {
+class GildedRose(private val items: List<Item>, private val itemAger: ItemAger = ItemAger()) {
 
     companion object {
 
@@ -14,11 +14,7 @@ class GildedRose(private val items: List<Item>) {
     fun updateQuality() {
         items.forEach {  item ->
             if (item.name != AGED_BRIE_ITEM_NAME && item.name != BACKSTAGE_PASSES_ITEM_NAME) {
-                if (item.quality > 0) {
-                    if (item.name != SULFURAS_ITEM_NAME) {
-                        item.quality -= 1
-                    }
-                }
+                item.quality = itemAger.ageOneDay(item).quality
             } else {
                 if (item.quality < 50) {
                     item.quality += 1
