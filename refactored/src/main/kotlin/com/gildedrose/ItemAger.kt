@@ -9,6 +9,8 @@ class ItemAger {
         private const val AGED_BRIE_ITEM_NAME = "Aged Brie"
 
         private const val SULFURAS_ITEM_NAME = "Sulfuras, Hand of Ragnaros"
+
+        private const val BACKSTAGE_PASSES_ITEM_NAME = "Backstage passes to a TAFKAL80ETC concert"
     }
 
     fun ageOneDay(item: Item): AgedItem {
@@ -16,6 +18,7 @@ class ItemAger {
         val newQuality = when (name) {
             SULFURAS_ITEM_NAME -> quality
             AGED_BRIE_ITEM_NAME -> quality.inc().coerceIn(0, 50)
+            BACKSTAGE_PASSES_ITEM_NAME -> quality.inc().coerceIn(0, 50)
             else -> quality.dec().coerceIn(0, 50)
         }
         return AgedItem(name, sellIn, newQuality)
