@@ -15,14 +15,20 @@ class ItemAger {
 
     fun ageOneDay(item: Item): AgedItem {
         val (name, sellIn, quality) = item
+        if (item.isLegendary()) return AgedItem(name, sellIn, quality)
         val newQuality = when (name) {
-            SULFURAS_ITEM_NAME -> quality
-            AGED_BRIE_ITEM_NAME -> quality.inc().coerceIn(0, 50)
-            BACKSTAGE_PASSES_ITEM_NAME -> quality.inc().coerceIn(0, 50)
-            else -> quality.dec().coerceIn(0, 50)
-        }
+            AGED_BRIE_ITEM_NAME -> quality.inc()
+            BACKSTAGE_PASSES_ITEM_NAME ->
+                if (sellIn <= 5) quality + 3
+                else if (sellIn <= 10) quality + 2
+                else quality.inc()
+
+            else -> quality.dec()
+        }.coerceIn(0, 50)
         return AgedItem(name, sellIn, newQuality)
     }
+
+    private fun Item.isLegendary() = this.name == SULFURAS_ITEM_NAME
 }
 
 private operator fun Item.component1() = this.name

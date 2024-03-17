@@ -54,10 +54,28 @@ class ItemAgerTest {
 
     @Test
     fun `should increase the quality of Backstage passes at the end of the day`() {
-        val item = Item(name = "Backstage passes to a TAFKAL80ETC concert", sellIn = 10, quality = 20)
+        val item = Item(name = "Backstage passes to a TAFKAL80ETC concert", sellIn = 12, quality = 20)
 
         val agedItem = itemAger.ageOneDay(item)
 
         agedItem.quality shouldBe 21
+    }
+
+    @Test
+    fun `should increase by 2 the quality of Backstage passes 10 days or less before the concert`() {
+        val item = Item(name = "Backstage passes to a TAFKAL80ETC concert", sellIn = 10, quality = 20)
+
+        val agedItem = itemAger.ageOneDay(item)
+
+        agedItem.quality shouldBe 22
+    }
+
+    @Test
+    fun `should increase by 4 the quality of Backstage passes 5 days or less before the concert`() {
+        val item = Item(name = "Backstage passes to a TAFKAL80ETC concert", sellIn = 5, quality = 20)
+
+        val agedItem = itemAger.ageOneDay(item)
+
+        agedItem.quality shouldBe 23
     }
 }
