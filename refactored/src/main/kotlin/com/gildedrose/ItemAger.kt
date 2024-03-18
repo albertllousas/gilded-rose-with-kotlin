@@ -18,28 +18,30 @@ class ItemAger(private val minQuality: Int = MIN_QUALITY, private val maxQuality
         SULFURAS -> ageLegendaryItem(item)
         AGED_BRIE -> ageBrie(item)
         BACKSTAGE_PASSES -> ageBackstagePasses(item)
-        CONJURED -> ageConjuredItem(item)
-        else -> ageStandardItem(item)
+        CONJURED -> ageConjured(item)
+        else -> ageStandard(item)
     }
 
     private fun ageLegendaryItem(item: Item) = AgedItem(item.name, item.sellIn, item.quality)
 
-    private fun ageBrie(item: Item) = ageItem(item, whenExpired = { it.quality + 2 }, otherwise = { it.quality.inc() })
+    private fun ageBrie(item: Item) =
+        ageItem(item, whenExpired = { it.quality + 2 }, otherwise = { it.quality.inc() })
 
-    private fun ageBackstagePasses(item: Item) = ageItem(
-        item,
-        whenExpired = { 0 },
-        otherwise = { if (item.sellIn <= 5) item.quality + 3 else if (item.sellIn <= 10) item.quality + 2 else item.quality + 1 }
-    )
+    private fun ageBackstagePasses(item: Item) =
+        ageItem(
+            item,
+            whenExpired = { 0 },
+            otherwise = { if (item.sellIn <= 5) item.quality + 3 else if (item.sellIn <= 10) item.quality + 2 else item.quality + 1 }
+        )
 
-    private fun ageStandardItem(item: Item) =
+    private fun ageStandard(item: Item) =
         ageItem(item, whenExpired = { it.quality - 2 }, otherwise = { it.quality - 1 })
 
-    private fun ageConjuredItem(item: Item) =
+    private fun ageConjured(item: Item) =
         ageItem(item, whenExpired = { it.quality - 4 }, otherwise = { it.quality - 2 })
 
     private fun ageItem(item: Item, whenExpired: (Item) -> Int, otherwise: (Item) -> Int) =
         (if (item.sellIn <= 0) whenExpired(item) else otherwise(item))
             .coerceIn(minQuality, maxQuality)
-            .let { AgedItem(item.name, item.sellIn.dec(), it) }
+            .let { newQuality -> AgedItem(item.name, item.sellIn.dec(), newQuality) }
 }
