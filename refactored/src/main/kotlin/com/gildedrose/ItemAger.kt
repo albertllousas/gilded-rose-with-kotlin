@@ -9,6 +9,7 @@ class ItemAger(private val minQuality: Int = MIN_QUALITY, private val maxQuality
         private const val AGED_BRIE = "Aged Brie"
         private const val SULFURAS = "Sulfuras, Hand of Ragnaros"
         private const val BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert"
+        private const val CONJURED = "Conjured Mana Cake"
         private const val MIN_QUALITY = 0
         private const val MAX_QUALITY = 50
     }
@@ -17,6 +18,7 @@ class ItemAger(private val minQuality: Int = MIN_QUALITY, private val maxQuality
         SULFURAS -> ageLegendaryItem(item)
         AGED_BRIE -> ageBrie(item)
         BACKSTAGE_PASSES -> ageBackstagePasses(item)
+        CONJURED -> ageConjuredItem(item)
         else -> ageStandardItem(item)
     }
 
@@ -37,4 +39,9 @@ class ItemAger(private val minQuality: Int = MIN_QUALITY, private val maxQuality
     private fun ageStandardItem(item: Item) = (if (item.sellIn <= 0) item.quality - 2 else item.quality.dec())
         .coerceIn(minQuality, maxQuality)
         .let { AgedItem(item.name, item.sellIn.dec(), it) }
+
+    private fun ageConjuredItem(item: Item) = (item.quality - 2)
+        .coerceIn(minQuality, maxQuality)
+        .let { AgedItem(item.name, item.sellIn.dec(), it) }
+
 }
