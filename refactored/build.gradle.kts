@@ -28,10 +28,6 @@ dependencies {
     testImplementation(group = "io.kotest", name = "kotest-assertions-core-jvm", version = Versions.KOTEST_ASSERTIONS)
 }
 
-application {
-    mainClass.set("pets.AppKt")
-}
-
 tasks.apply {
     test {
         maxParallelForks = 1

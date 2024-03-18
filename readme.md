@@ -58,5 +58,5 @@ $> glog
 * 7836874 Refactor on GildedRose: make items private in GildedRose class
 * 0d48b5d Refactor on GildedRose: use operator-assignments '-='
 * 2d1df43 Add approval tests coverage
-* a747513 Added initial structure and appproval tests
+* a747513 Added initial structure and approval tests
 ```
