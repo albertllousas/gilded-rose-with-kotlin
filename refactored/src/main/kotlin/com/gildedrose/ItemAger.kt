@@ -11,6 +11,10 @@ class ItemAger {
         private const val SULFURAS_ITEM_NAME = "Sulfuras, Hand of Ragnaros"
 
         private const val BACKSTAGE_PASSES_ITEM_NAME = "Backstage passes to a TAFKAL80ETC concert"
+
+        private const val MIN_QUALITY = 0
+
+        private const val MAX_QUALITY = 50
     }
 
     fun ageOneDay(item: Item): AgedItem {
@@ -24,7 +28,7 @@ class ItemAger {
                 else item.quality.inc()
 
             else -> if (item.sellIn <= 0) item.quality - 2 else item.quality.dec()
-        }.coerceIn(0, 50)
+        }.coerceIn(MIN_QUALITY, MAX_QUALITY)
         val newSellIn = item.sellIn.dec()
         return AgedItem(item.name, newSellIn, newQuality)
     }
