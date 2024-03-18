@@ -17,7 +17,7 @@ class ItemAger {
         val (name, sellIn, quality) = item
         if (item.isLegendary()) return AgedItem(name, sellIn, quality)
         val newQuality = when (name) {
-            AGED_BRIE_ITEM_NAME -> quality.inc()
+            AGED_BRIE_ITEM_NAME -> if (sellIn <= 0) quality + 2 else quality.inc()
             BACKSTAGE_PASSES_ITEM_NAME ->
                 if (sellIn <= 0) 0
                 else if (sellIn <= 5) quality + 3
