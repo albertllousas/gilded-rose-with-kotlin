@@ -40,8 +40,7 @@ class ItemAger(private val minQuality: Int = MIN_QUALITY, private val maxQuality
         .coerceIn(minQuality, maxQuality)
         .let { AgedItem(item.name, item.sellIn.dec(), it) }
 
-    private fun ageConjuredItem(item: Item) = (item.quality - 2)
+    private fun ageConjuredItem(item: Item) = (if (item.sellIn <= 0) item.quality -4 else item.quality - 2)
         .coerceIn(minQuality, maxQuality)
         .let { AgedItem(item.name, item.sellIn.dec(), it) }
-
 }

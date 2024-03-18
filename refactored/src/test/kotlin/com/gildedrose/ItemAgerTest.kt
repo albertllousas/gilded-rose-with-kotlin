@@ -132,4 +132,13 @@ class ItemAgerTest {
 
         agedItem.quality shouldBe 18
     }
+
+    @Test
+    fun `should lower quality twice for Conjured items once the sell by date has passed`(){
+        val item = Item(name = "Conjured Mana Cake", sellIn = -1, quality = 20)
+
+        val agedItem = itemAger.ageOneDay(item)
+
+        agedItem.quality shouldBe 16
+    }
 }
