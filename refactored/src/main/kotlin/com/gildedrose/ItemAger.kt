@@ -24,7 +24,7 @@ class ItemAger {
                 else if (sellIn <= 10) quality + 2
                 else quality.inc()
 
-            else -> quality.dec()
+            else -> if (sellIn <= 0) quality - 2 else quality.dec()
         }.coerceIn(0, 50)
         val newSellIn = sellIn.dec()
         return AgedItem(name, newSellIn, newQuality)

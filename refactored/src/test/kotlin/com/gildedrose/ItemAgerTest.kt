@@ -105,4 +105,13 @@ class ItemAgerTest {
 
         agedItem.quality shouldBe 0
     }
+
+    @Test
+    fun `should degrade quality twice as fast once the sell by date has passed`() {
+        val item = Item(name = "Standard Item", sellIn = 0, quality = 20)
+
+        val agedItem = itemAger.ageOneDay(item)
+
+        agedItem.quality shouldBe 18
+    }
 }
