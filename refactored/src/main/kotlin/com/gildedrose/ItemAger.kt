@@ -14,11 +14,13 @@ class ItemAger(private val minQuality: Int = MIN_QUALITY, private val maxQuality
     }
 
     fun ageOneDay(item: Item): AgedItem = when (item.name) {
-        SULFURAS -> AgedItem(item.name, item.sellIn, item.quality)
+        SULFURAS -> ageLegendaryItem(item)
         AGED_BRIE -> ageBrie(item)
         BACKSTAGE_PASSES -> ageBackstagePasses(item)
         else -> ageStandardItem(item)
     }
+
+    private fun ageLegendaryItem(item: Item) = AgedItem(item.name, item.sellIn, item.quality)
 
     private fun ageBrie(item: Item) = (if (item.sellIn <= 0) item.quality + 2 else item.quality.inc())
         .coerceIn(minQuality, maxQuality)
