@@ -15,32 +15,20 @@ class ItemAger(private val minQuality: Int = MIN_QUALITY, private val maxQuality
     }
 
     fun ageOneDay(item: Item): AgedItem = when (item.name) {
-        SULFURAS -> ageLegendaryItem(item)
-        AGED_BRIE -> ageBrie(item)
+        SULFURAS -> AgedItem(item.name, item.sellIn, item.quality)
+        AGED_BRIE -> age(item, whenExpired = { it.quality + 2 }, otherwise = { it.quality.inc() })
         BACKSTAGE_PASSES -> ageBackstagePasses(item)
-        CONJURED -> ageConjured(item)
-        else -> ageStandard(item)
+        CONJURED -> age(item, whenExpired = { it.quality - 4 }, otherwise = { it.quality - 2 })
+        else -> age(item, whenExpired = { it.quality - 2 }, otherwise = { it.quality - 1 })
     }
 
-    private fun ageLegendaryItem(item: Item) = AgedItem(item.name, item.sellIn, item.quality)
+    private fun ageBackstagePasses(item: Item) = age(
+        item,
+        whenExpired = { 0 },
+        otherwise = { if (item.sellIn <= 5) item.quality + 3 else if (item.sellIn <= 10) item.quality + 2 else item.quality + 1 }
+    )
 
-    private fun ageBrie(item: Item) =
-        ageItem(item, whenExpired = { it.quality + 2 }, otherwise = { it.quality.inc() })
-
-    private fun ageBackstagePasses(item: Item) =
-        ageItem(
-            item,
-            whenExpired = { 0 },
-            otherwise = { if (item.sellIn <= 5) item.quality + 3 else if (item.sellIn <= 10) item.quality + 2 else item.quality + 1 }
-        )
-
-    private fun ageStandard(item: Item) =
-        ageItem(item, whenExpired = { it.quality - 2 }, otherwise = { it.quality - 1 })
-
-    private fun ageConjured(item: Item) =
-        ageItem(item, whenExpired = { it.quality - 4 }, otherwise = { it.quality - 2 })
-
-    private fun ageItem(item: Item, whenExpired: (Item) -> Int, otherwise: (Item) -> Int) =
+    private fun age(item: Item, whenExpired: (Item) -> Int, otherwise: (Item) -> Int) =
         (if (item.sellIn <= 0) whenExpired(item) else otherwise(item))
             .coerceIn(minQuality, maxQuality)
             .let { newQuality -> AgedItem(item.name, item.sellIn.dec(), newQuality) }
