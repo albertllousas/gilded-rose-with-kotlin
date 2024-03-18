@@ -2,7 +2,7 @@ package com.gildedrose
 
 data class AgedItem(val name: String, val sellIn: Int, val quality: Int)
 
-class ItemAger {
+class ItemAger(private val minQuality: Int = MIN_QUALITY, private val maxQuality: Int = MAX_QUALITY) {
 
     companion object {
 
@@ -21,7 +21,7 @@ class ItemAger {
     }
 
     private fun ageBrie(item: Item) = (if (item.sellIn <= 0) item.quality + 2 else item.quality.inc())
-        .coerceIn(MIN_QUALITY, MAX_QUALITY)
+        .coerceIn(minQuality, maxQuality)
         .let { AgedItem(item.name, item.sellIn.dec(), it) }
 
     private fun ageBackstagePasses(item: Item) = when {
@@ -29,10 +29,10 @@ class ItemAger {
         item.sellIn <= 5 -> item.quality + 3
         item.sellIn <= 10 -> item.quality + 2
         else -> item.quality.inc()
-    }.coerceIn(MIN_QUALITY, MAX_QUALITY)
+    }.coerceIn(minQuality, maxQuality)
         .let { AgedItem(item.name, item.sellIn.dec(), it) }
 
     private fun ageStandardItem(item: Item) = (if (item.sellIn <= 0) item.quality - 2 else item.quality.dec())
-        .coerceIn(MIN_QUALITY, MAX_QUALITY)
+        .coerceIn(minQuality, maxQuality)
         .let { AgedItem(item.name, item.sellIn.dec(), it) }
 }
