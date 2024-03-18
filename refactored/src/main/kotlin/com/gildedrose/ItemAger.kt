@@ -2,6 +2,8 @@ package com.gildedrose
 
 data class AgedItem(val name: String, val sellIn: Int, val quality: Int)
 
+typealias Quality = Int
+
 class ItemAger(private val minQuality: Int = MIN_QUALITY, private val maxQuality: Int = MAX_QUALITY) {
 
     companion object {
@@ -28,7 +30,7 @@ class ItemAger(private val minQuality: Int = MIN_QUALITY, private val maxQuality
         otherwise = { if (item.sellIn <= 5) item.quality + 3 else if (item.sellIn <= 10) item.quality + 2 else item.quality + 1 }
     )
 
-    private fun age(item: Item, whenExpired: (Item) -> Int, otherwise: (Item) -> Int) =
+    private fun age(item: Item, whenExpired: (Item) -> Quality, otherwise: (Item) -> Quality) =
         (if (item.sellIn <= 0) whenExpired(item) else otherwise(item))
             .coerceIn(minQuality, maxQuality)
             .let { newQuality -> AgedItem(item.name, item.sellIn.dec(), newQuality) }
